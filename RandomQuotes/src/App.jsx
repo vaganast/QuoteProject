@@ -15,7 +15,7 @@ function App() {
     setQuote(response.data.content)
     setAuthor(response.data.author)
   }
-  
+
   useEffect(() => {
     getQuotes()
   }, [])
@@ -24,14 +24,14 @@ function App() {
     <>    
       <div className='quote-box' id='quote-box'>
         <div id='quote-text'>
-          <h1 className='text'>{quote}</h1>
+          <h1 className='text' id="text">{quote}</h1>
         </div>
         <div id='quote-author'>
-          <h3 className='author'>{author}</h3>
+          <h3 className='author' id="author">{author}</h3>
         </div>
         <div className='buttons'>                        
-            <SocialIcon network="twitter" url='https://twitter.com/intent/tweet' target='_blank'/> 
-        <button id='#new-quote' className='new-quote' onClick={getQuotes}>Generate Quote</button>
+            <SocialIcon id="tweet-quote" network="twitter" url='https://twitter.com/intent/tweet' target='_blank'/> 
+        <button id="new-quote" className='new-quote' onClick={getQuotes}>New Quote</button>
         </div>           
       </div>
       <footer className='footer'>Created by Vagelis</footer>    
