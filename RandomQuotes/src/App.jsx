@@ -1,33 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import { SocialIcon } from 'react-social-icons';
+import axios from 'axios';
+
+const client = axios.create({
+  baseURL: 'https://api.quotable.io/' 
+});
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [quote, setQuote] = useState()
+  const [author, setAuthor] = useState()
+
+  const getQuotes = async () => {
+    const response = await client.get('/random')
+    setQuote(response.data.content)
+    setAuthor(response.data.author)
+  }
+  
+  useEffect(() => {
+    getQuotes()
+  }, [])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <>    
+      <div className='quote-box' id='quote-box'>
+        <div id='quote-text'>
+          <h1 className='text'>{quote}</h1>
+        </div>
+        <div id='quote-author'>
+          <h3 className='author'>{author}</h3>
+        </div>
+        <div className='buttons'>                        
+            <SocialIcon network="twitter" url='https://twitter.com/intent/tweet' target='_blank'/> 
+        <button id='#new-quote' className='new-quote' onClick={getQuotes}>Generate Quote</button>
+        </div>           
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+      <footer className='footer'>Created by Vagelis</footer>    
+    </>
   )
 }
 
